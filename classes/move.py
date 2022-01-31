@@ -116,23 +116,26 @@ class Move:
         self.executed = False
         return self.capture
 
-    def __is_legal(self) -> bool:
+    def __is_legal(self, ignore_friendly_check:bool = False) -> bool:
         """
         Finds out if this move is legal or not.
 
+        :param: ignore_friendly_check: bool for if it should be checked if this move causes a friendly check. Useful for
+        checking if the opposing king is under attack.
         :return: bool as described
         """
         if not (self.dest.is_vacant or self.dest.is_hostile(self.piece.colour)):
             return False
-        self.execute()
-        if self.piece.friendly_king_in_check():
+        if not ignore_friendly_check:
+            self.execute()
+            if self.piece.friendly_king_in_check():
+                self.reverse()
+                return False
             self.reverse()
-            return False
-        self.reverse()
         return True
 
     @staticmethod
-    def filter_move(dest_coord: tuple, piece: Piece, board: Board) -> Move | None:
+    def filter_move(dest_coord: tuple, piece: Piece, board: Board, ignore_friendly_check:bool = False) -> Move | None:
         """
         Finds out if a move with inputted destination coords, for a particular piece can be created.
 
@@ -142,9 +145,10 @@ class Move:
         For example, don't input destination coords on the other side of the board for a knight that you know cannot
         get there in the first place!
 
-        :param dest_coord: tuple integer pair of prosepctive oordinates on a chessboard to be checked as a valid destination for the piece
+        :param dest_coord: tuple integer pair of prospective coordinates on a chessboard to be checked as a valid destination for the piece
         :param piece: Piece object that could be moved to the destination coordinates
         :param board : Board object for this game of chess
+        :param ignore_friendly_check: bool if checking for a friendly check should be skipped
         :return: A Move object if it can be created, otherwise None
         """
         if Position.coords_in_board(dest_coord):
@@ -155,7 +159,7 @@ class Move:
         return None
 
     @staticmethod
-    def filter_moves(dest_coords: list, piece: Piece, board: Board) -> list:
+    def filter_moves(dest_coords: list, piece: Piece, board: Board, ignore_friendly_check: bool = False) -> list:
         """
         Filters a list of destination coordinates for a piece on a chessboard. Returns a list of Move objects that can
         are legally possible for the piece to move to the destination coordinates.
@@ -165,6 +169,7 @@ class Move:
         :param dest_coords: list of tuple integer pair of prospective coordinate destinations on a chessboard for an inputted piece
         :param piece: Piece object that will prospectively move to coords in dest_coords
         :param board: Board object for this chess game
+        :param ignore_friendly_check: boolean if any friendly check should be ignored if any moves are to be done, default False
         :return: list of moves that can be completed given inputs
         """
         moves = []
