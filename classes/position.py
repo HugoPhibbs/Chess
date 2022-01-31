@@ -1,9 +1,12 @@
+from classes.pieces.piece import Piece
+
+
 class Position:
     """
     Represents a Position on a chessboard
     """
 
-    def __init__(self, coords, piece=None):
+    def __init__(self, coords, piece: Piece = None):
         """
         Constructor for a Position object
 
@@ -68,6 +71,15 @@ class Position:
         return str(self.row + 1)
 
     @property
+    def piece(self) -> Piece:
+        return self.__piece
+
+    @piece.setter
+    def piece(self, val) -> None:
+        assert isinstance(val, val)
+        self.__piece = val
+
+    @property
     def coords(self):
         return self.__coords
 
@@ -79,10 +91,11 @@ class Position:
             raise Exception("Inputted value for new coords for this position are not valid!")
 
     @property
-    def row(self):
+    def row(self) -> int:
         return self.coords[0]
 
-    def col(self):
+    @property
+    def col(self) -> int:
         return self.coords[1]
 
     @property
@@ -94,13 +107,55 @@ class Position:
         """
         return self.piece is not None
 
-    def is_hostile(self, colour):
+    def is_hostile(self, colour : str):
         """
         Finds out if this position is occupied by a piece that has a colour that is opposite to the inputted piece
 
-        :param colour: colour of a Piece object to be checked if this Position contains an hostile piece to it
+        By convention, an vacant position is not considered hostile, nor is it considered friendly
+
+        :param colour: str for the colour of a Piece object to be checked if this Position contains an hostile piece to it
         :return: bool if this position is occupied by a enemy piece as described
         """
-        if self.piece is None:
+        if self.is_vacant:
             return False
         return self.piece.colour != colour
+
+    def is_friendly(self, colour):
+        """
+        Finds out if this position is occupied by a piece that is considered friendly to another piece
+
+        By convention, if this position is vacant, it is not considered friendly, nor hostile
+
+        :param colour: str for the colour of a piece that will be considered to be friendly to the colour of the piece
+        on this board, if one exists
+        :return: bool true if there is a piece on this position that has the same colour as inputted colour, otherwise false,
+        see note above
+        """
+        if self.is_vacant:
+            return False
+        return self.piece.colour == colour
+
+    def has_piece_type(self, piece_type: str) -> bool:
+        """
+        Finds out if this Position has a piece of a given type.
+
+        False if this position contains no Piece, or not the right type
+
+        :param piece_type: str for the type of piece as described
+        :return: bool as described
+        """
+        if self.is_vacant:
+            return False
+        return self.piece.type == piece_type
+
+    def replace_piece(self, new_piece:Piece = None) -> Piece:
+        """
+        Replaces the piece that is on this board with a new piece
+
+        :param new_piece Piece object that will be placed on this position, default None
+        :return: Piece that has been replaced, None if there was no piece already on this position
+        """
+        assert new_piece is None or isinstance(new_piece, Piece)
+        piece = self.piece
+        self.piece = new_piece
+        return piece
