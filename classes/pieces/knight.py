@@ -52,7 +52,7 @@ class Knight(LimitedPiece):
         used to find the possible coordinates of attacking knights from given coordinates
 
         Static so it can be used by king to check if it is being checked by a knight
-        
+
         :param coords: tuple integer pair of coordinates on a chess board
         :return: list of coordinates as described
         """
