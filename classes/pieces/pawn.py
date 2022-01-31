@@ -36,7 +36,7 @@ class Pawn(LimitedPiece):
         """
         Finds any moves that can be done by this Pawn for an inputted board
 
-        NOTE: ignores any valid move requirements as per Board.move_is_valid(move), this is done later
+        NOTE: ignores any valid move requirements as per Board.move_is_legal(move), this is done later
 
         :param board: Board object for this game of chess
         :return: list of coordinates for any moves that this pawn can do
@@ -47,7 +47,7 @@ class Pawn(LimitedPiece):
         """
         Finds any possible moves forward that this pawn can do
 
-        Ignores any requirements of valid moves as per Board.move_is_valid(move), this is to be done later
+        Ignores any requirements of valid moves as per Board.move_is_legal(move), this is to be done later
 
         :param board: Board object for a game of chess
         :return: list of tuples coordinates for any forward moves that can be done
@@ -80,7 +80,7 @@ class Pawn(LimitedPiece):
         Finds out if an inputted attack is valid for this pawn on an inputted board
 
         NOTE, doesn't check if an attack moves may put the king into check or any other requirements for valid moves
-        as per Board.move_is_valid(move). Only checks if this attack is inside the board, and that the an enemy piece
+        as per Board.move_is_legal(move). Only checks if this attack is inside the board, and that the an enemy piece
         occupies the position of the attack.
 
         :param attack: coordinates of a new position of this pawn given an attack on these coordinates
@@ -111,7 +111,7 @@ class Pawn(LimitedPiece):
         """
         Finds if this Pawn can do a double forward move on a chessboard. As it can do at the start of the game
 
-        Ignores if this move is valid as per Board.move_is_valid(move)
+        Ignores if this move is valid as per Board.move_is_legal(move)
 
         :return: bool as described
         """
@@ -166,7 +166,7 @@ class Pawn(LimitedPiece):
         Finds out if this pawn can move directly forward or not (no change in column, ie no lateral movement)
 
         NOTE: simply checks if the position in-front of this pawn exists and that it is vacant, Does not check if
-        any move forward is valid as per Board.move_is_valid(move)
+        any move forward is valid as per Board.move_is_legal(move)
 
         :param board: Board object to be checked if this pawn can move forward on or not
         :return: bool if this pawn can move forward, please see note above
