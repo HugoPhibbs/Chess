@@ -42,10 +42,3 @@ class Bishop(RangedPiece):
         """
         return self.diag_directions
 
-    @property
-    def value(self) -> int:
-        """
-        Returns value of this piece, for scoring
-        :return: int as described
-        """
-        return 3

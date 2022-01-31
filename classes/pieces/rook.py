@@ -38,12 +38,3 @@ class Rook(RangedPiece):
         :return: str as described
         """
         return "R"
-
-    @property
-    def value(self) -> int:
-        """
-        Returns the value of this piece, useful for scoring
-
-        :return: int as described
-        """
-        return 5
