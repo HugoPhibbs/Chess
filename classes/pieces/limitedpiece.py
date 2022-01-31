@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from classes.board import Board
 from classes.pieces.piece import Piece
 
 
@@ -9,16 +10,16 @@ class LimitedPiece(ABC, Piece):
     other pieces, on the other hand, their range is limited by the board itself or by other pieces
     """
 
-    @staticmethod
-    @abstractmethod
-    def moves(*args):
+    def valid_moves_limited(self, board : Board) -> list:
         """
-        Abstract static method to return the possible moves that can be done by a limited range piece. This is intended to
-        provide moves that can then be checked if they are valid or not
+        Return a list of the valid moves that can be done for a limited range piece
 
-        Ignores the size of the board, valid checking is done by Board class
-
-        :param args any arguments that may be needed for the implemenation of this method=
-        :return:
+        :param board: Board object for a game of chess
+        :return: list as described
         """
-        pass
+        possible_moves = self.moves()
+        valid_moves = []
+        for move in possible_moves:
+            if self.move_is_valid(move, piece):
+                valid_moves.append(move)
+        return valid_moves
