@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from classes.move import Move
 from classes.position import Position
 
 
@@ -16,7 +17,7 @@ class Piece(ABC):
     __is_captured = False
     __position = None
 
-    def __init__(self, colour_: str, value, position : Position):
+    def __init__(self, colour_: str, value, position: Position):
         """
         Constructor for a Piece object,
 
@@ -37,7 +38,7 @@ class Piece(ABC):
         """
         return piece.colour != self.colour
 
-    def value_is_valid(self, val) -> bool:
+    def value_is_valid(val) -> bool:
         """
         Finds if the value for a piece is valid or not.
 
@@ -102,7 +103,6 @@ class Piece(ABC):
         assert isinstance(val, bool)
         self.__is_captured = val
 
-
     @property
     def position(self):
         """"""
@@ -131,15 +131,57 @@ class Piece(ABC):
         """
         pass
 
-    @abstractmethod
+    @property
     def value(self) -> int:
         """
-        Abstract method for the value of this Piece
+        Returns the value of this Piece, for scoring
 
         :return: int as described
         """
-        pass
+        return self.value
+
+    @value.setter
+    def value(self, val):
+        assert Piece.value_is_valid(val)
+        self.__value = val
 
     @property
     def move_distance_lim(self):
         return 8
+
+    @abstractmethod
+    def moves(self, board, ignore_friendly_check=False) -> list[Move]:
+        """
+        Abstract method to find the moves that this piece can do on a board at a particular state of a chess game
+
+        :param board: Board object for a game of chess
+        :param ignore_friendly_check bool for if any returned moves should ignore the prospect of putting a friendly king in check
+        :return: list containing coordinate tuples of the possible coordinates on a chessboard that this piece can do
+        """
+        pass
+        # TODO need way by pass checking that a move puts friendly king in check, unnecessary for checking if
+        #  a piece is checking another piece
+
+    @abstractmethod
+    def can_move_to_coords(self, coords: tuple, board) -> bool:
+        """
+        Finds out if this Piece object can move to a given coordinate pair given that there is nothing in the way
+        between them.
+
+        Ignores fact that such move may put a friendly king into check
+
+        :param coords: tuple containing two integers specifying the row and column of coordinates on a chessboard
+        :return: bool if this Piece can move to inputted coords as described
+        """
+        for move in self.moves(board, ignore_friendly_check=True):
+            if move.dest.coords == coords:
+                return True
+        return False
+
+    def friendly_king_in_check(self) -> bool:
+        """
+        Finds out if the king belonging to the same player as this Piece is in check
+
+        :return: bool as described
+        """
+        pass
