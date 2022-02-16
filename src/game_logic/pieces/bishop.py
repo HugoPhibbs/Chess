@@ -1,19 +1,16 @@
-from classes.pieces.piece import Piece
-from classes.pieces.rangedpiece import RangedPiece
-
+from src.game_logic.pieces.rangedpiece import RangedPiece
 
 class Bishop(RangedPiece):
     """
     Represents a bishop piece in a game of chess
     """
 
-    def __init__(self, *args):
+    def __init__(self, colour, value=0, king=None):
         """
         Constructor for a Bishop piece, all constructor arguments are passed to Piece
 
-        :param args: parameters for the parent constructor of a Piece object
         """
-        super().__init__(*args)
+        super().__init__(colour, value, king)
 
     @property
     def type(self):
@@ -30,15 +27,10 @@ class Bishop(RangedPiece):
 
         :return: str as described
         """
+        return "Bishop"
+
+    def str_abr(self) -> str:
         return "B"
 
-    def move_directions(self):
-        """
-        Finds the list of directions that this Bishop can travel in.
-
-        Implements RangedPiece.move_directions()
-
-        :return: list of string objects that describe the directions that this piece can travel in
-        """
-        return self.diag_directions
-
+    def bearings(self) -> list[str]:
+        return self.bearing_helper.diag_bearings()
