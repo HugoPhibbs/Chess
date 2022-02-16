@@ -1,0 +1,4 @@
+class CommandLineUI:
+    pass
+
+#TODO
