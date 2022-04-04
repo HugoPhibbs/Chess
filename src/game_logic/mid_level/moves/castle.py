@@ -44,6 +44,12 @@ class Castle(Move):
         self.king.swap_position(self.board.get_position(self.king_dest_coords))
 
     def length(self) -> int:
+        """
+        Finds the length of this castling move.
+
+        By convention, this just returns 0
+        :return:
+        """
         return 0
 
     def type(self) -> str:
