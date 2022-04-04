@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from src.game_logic.pieces.king import King
     from src.game_logic.mid_level.support.position import Position
     from src.game_logic.helpers import BearingHelper
+    from src.game_logic.mid_level.move_finders.movefinder import MoveFinder
 
 
 class RangedPiece(Piece):
@@ -17,7 +18,7 @@ class RangedPiece(Piece):
     Namely, this includes rook, bishops and queen pieces
     """
 
-    def __init__(self, colour: str, bearing_helper : 'BearingHelper', value : int =0, king: 'King' | None = None, position: 'Position' | None = None):
+    def __init__(self, colour: str, move_finder: 'MoveFinder', bearing_helper : 'BearingHelper', value : int =0, king: 'King' | None = None, position: 'Position' | None = None):
         """
         Constructor for a RangedPiece object
 
@@ -26,7 +27,7 @@ class RangedPiece(Piece):
         :param king: King object that this piece is on the same side on, default None
         :param position: Position object that this piece currently occupies, default None
         """
-        super().__init__(colour, value, king, position)
+        super().__init__(colour, move_finder,  value, king, position)
         self.bearing_helper = bearing_helper
 
     @abstractmethod

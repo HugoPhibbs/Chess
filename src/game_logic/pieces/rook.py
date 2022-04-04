@@ -2,7 +2,8 @@ from src.game_logic.pieces.rangedpiece import RangedPiece
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    pass
+    from src.game_logic.mid_level.move_finders.movefinder import MoveFinder
+    from src.game_logic.helpers import BearingHelper
 
 
 class Rook(RangedPiece):
@@ -12,13 +13,13 @@ class Rook(RangedPiece):
 
     is_castleable : bool = False
 
-    def __init__(self, colour, value=0, king=None):
+    def __init__(self, colour : str, move_finder : 'MoveFinder', bearing_helper : 'BearingHelper', value=0, king=None):
         """
         Constructor for a Rook piece, all constructor arguments are passed to Piece
 
         :param args: parameters for the parent constructor of a Piece object
         """
-        super().__init__(colour, value, king)
+        super().__init__(colour, move_finder, bearing_helper, value, king)
 
     @property
     def type(self):

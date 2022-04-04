@@ -13,7 +13,7 @@ class KingMoveFinder(MoveFinder):
     Class to help find moves that a king piece can do.
     """
 
-    def __init__(self, king: 'Piece', board: 'Board'):
+    def __init__(self, board: 'Board', king: 'Piece' = None):
         """
         Constructor for a KingMoveFinder
 
@@ -21,7 +21,7 @@ class KingMoveFinder(MoveFinder):
         :param board: Board object for this game of chess
         """
         super().__init__(piece=king, board=board)
-        assert king.type == "KING", "Piece must be type king!"
+        assert king is None or king.type == "KING", "King Piece must be type king! Or be None"
 
     def _possible_moves(self) -> list['Move']:
         return self._create_standard_moves() + self.__castle_moves()

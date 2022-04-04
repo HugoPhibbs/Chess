@@ -5,7 +5,8 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.game_logic.mid_level.support.position import Position
-
+    from src.game_logic.mid_level.move_finders.movefinder import MoveFinder
+    from src.game_logic.pieces.king import King
 
 class LimitedPiece(Piece):
     """

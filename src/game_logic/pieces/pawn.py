@@ -6,6 +6,7 @@ if TYPE_CHECKING:
     from src.game_logic.mid_level.support.board import Board
     from src.game_logic.mid_level.moves.move import Move
     from src.game_logic.pieces.king import King
+    from src.game_logic.mid_level.move_finders.movefinder import MoveFinder
 
 
 class Pawn(LimitedPiece):
@@ -13,12 +14,12 @@ class Pawn(LimitedPiece):
     Represents a pawn piece in a game of chess
     """
 
-    def __init__(self, colour: str, value: int = 0, king: 'King' = None, position: 'Position' = None):
+    def __init__(self, colour: str, move_finder: 'MoveFinder', value: int = 0, king: 'King' = None, position: 'Position' = None):
         """
         Constructor for a Pawn piece, all constructor arguments are passed to Piece
 
         """
-        super().__init__(colour, value, king, position)
+        super().__init__(colour, move_finder, value, king, position)
 
     @property
     def type(self):

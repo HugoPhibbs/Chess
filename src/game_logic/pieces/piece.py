@@ -38,6 +38,7 @@ class Piece(ABC):
         self.value = value
         self.king = king
         self.position = position
+        move_finder.piece = self
 
     def post_move_updates(self, move : 'Move') -> None:
         """
