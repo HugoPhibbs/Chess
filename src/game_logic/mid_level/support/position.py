@@ -4,8 +4,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.game_logic.pieces.piece import Piece
-
-from src.game_logic.helpers import coords_helper
+    from src.game_logic.helpers import CoordsHelper
 
 
 class Position:
@@ -15,7 +14,7 @@ class Position:
 
     __piece: 'Piece' = None
 
-    def __init__(self, coords: tuple[int, int], piece: 'Piece' = None):
+    def __init__(self, coords: tuple[int, int], coords_helper : 'CoordsHelper', piece: 'Piece' = None):
         """
         Constructor for a Position object
 
@@ -24,9 +23,10 @@ class Position:
         :param coords_helper: CoordsHelper object to help with dealing with coordinates
         :param piece: Piece object that this position contains, leave empty if no piece present
         """
+        self.coords_helper = coords_helper
         self.__set_coords(coords)
         self.piece = piece
-
+    
     def __repr__(self) -> str:
         """
         Returns a string representation of this position
@@ -90,7 +90,7 @@ class Position:
         :param val: tuple of integers to be checked if valid, then set as the coordinates of this position
         :return: None
         """
-        assert coords_helper.coords_are_valid(val), "Inputted value for new coords for this position are not valid!, " \
+        assert self.coords_helper.coords_are_valid(val), "Inputted value for new coords for this position are not valid!, " \
                                                     "see Board.coords_are_valid(coords)"
         self.__coords = val
 
