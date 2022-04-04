@@ -26,7 +26,7 @@ class TestBoard(unittest.TestCase):
 
     def test_coords_in_board(self):
         # Test edge cases, in board
-        coords_in_board = lambda coords: Board._Board__coords_in_board(coords)
+        coords_in_board = lambda coords: Board.coords_in_board(coords)
         self.assertTrue(coords_in_board((0, 0)))
         self.assertTrue(coords_in_board((0, 7)))
         self.assertTrue(coords_in_board((7, 7)))
