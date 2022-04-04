@@ -16,7 +16,7 @@ class MoveFinder(ABC):
     Class to support finding the moves that a piece can do at a given point in a game of chess
     """
 
-    def __init__(self, piece: 'Piece', board: 'Board'):
+    def __init__(self, board: 'Board', piece: 'Piece' = None):
         """
         Constructor for a MoveFinder
 
@@ -38,7 +38,7 @@ class MoveFinder(ABC):
 
     def can_attack_coords(self, coords : tuple[int, int]) -> bool:
         """
-        Finds out if the Piece that this MoveFinder finds moves for can attack coordinate on a chessboard
+        Finds out if the Piece that this MoveFinder finds moves for can attack the given coordinates on a chessboard
 
         :param coords: coordinates on a chessboard
         :return: bool as described

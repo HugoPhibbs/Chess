@@ -7,13 +7,12 @@ if TYPE_CHECKING:
 
 from src.game_logic.mid_level.move_finders.movefinder import MoveFinder
 
-
 class KnightMoveFinder(MoveFinder):
     """
-    Finds the moves that a knight can during a game of chess
+    Finds the moves that a knight can do during a game of chess
     """
 
-    def __init__(self, knight: 'Piece' | 'Knight', board: 'Board'):
+    def __init__(self, board: 'Board', knight: 'Piece' | 'Knight' = None,):
         """
         Creates a KnightMoveFinder object
         :param knight: Knight object to find the moves for
@@ -34,7 +33,7 @@ class KnightMoveFinder(MoveFinder):
 
         Implemented with coords as an input so to help to see if a king is in check via a knight, hence also why it is static
 
-        :param coords: coords to find the move coordinates of a knight (or attack from)
+        :param coords to find the move coordinates of a knight (or attack from)
         :return: list of tuples as described
         """
         row = coords[0]

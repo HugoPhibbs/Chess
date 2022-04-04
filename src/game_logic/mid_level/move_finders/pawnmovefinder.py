@@ -14,15 +14,15 @@ class PawnMoveFinder(MoveFinder):
     Finds the moves that can be completed by a Pawn
     """
 
-    def __init__(self, pawn: 'Piece' | 'Pawn', board: 'Board'):
+    def __init__(self, board: 'Board', pawn: 'Piece' | 'Pawn' = None):
         """
         Constructor for a pawn move finder
 
         :param pawn: Pawn piece to find the moves for
         :param board: Board object for this game of chess
         """
-        super().__init__(pawn, board)
-        assert pawn.type == "PAWN", "Only pawns should be used in PawnMoveFinder!"
+        super().__init__(board, pawn)
+        assert pawn is None or pawn.type == "PAWN", "Only pawns or None objects should be used in PawnMoveFinder!"
 
     def _possible_moves(self) -> list['Move']:
         return self._create_standard_moves(self.__forward_coords(), can_capture=False) + self._create_standard_moves(self.__attack_coords()) + self.__en_passant_moves()

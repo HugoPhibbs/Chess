@@ -10,15 +10,21 @@ if TYPE_CHECKING:
 
 from src.game_logic.mid_level.move_finders.movefinder import MoveFinder
 
-
 class RangedMoveFinder(MoveFinder):
     """
     Finds the moves that a Ranged Piece can do in a game of chess
     """
 
-    def __init__(self, ranged_piece: 'Piece' | 'RangedPiece', board: 'Board', traverse_helper : 'TraverseHelper'):
+    def __init__(self, board: 'Board', traverse_helper : 'TraverseHelper', ranged_piece: 'Piece' | 'RangedPiece' = None):
+        """
+        Initializer for a RangedMoveFinder. Finds moves that can be done by a RangedPiece
+
+        :param ranged_piece: RangedPiece object that is this object finds moves for
+        :param board: Board object for the current game of chess
+        :param traverse_helper: TraverseHelper object to help with traversing a chessboard
+        """
         super().__init__(piece=ranged_piece, board=board)
-        assert ranged_piece.type in ['BISHOP', 'QUEEN', 'ROOK'], "Inputted piece type must be a ranged piece!"
+        assert ranged_piece is None or ranged_piece.type in ['BISHOP', 'QUEEN', 'ROOK'], "Inputted piece type must be a ranged piece or None!"
         self.traverse_helper = traverse_helper
 
     def _possible_moves(self) -> list['Move']:
