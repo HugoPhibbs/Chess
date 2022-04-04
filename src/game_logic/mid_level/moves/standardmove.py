@@ -30,7 +30,7 @@ class StandardMove(Move):
         :param dest_coords: coordinates for where this move ends
         :param capture_coords: coordinates for the piece that is being captured by this move.
          If left None, these are set to dest_coords. Aimed at supporting en-passant capturing
-        :param can_capture: bool for if this Move can capture another piece or not
+        :param can_capture: bool for if this Move can capture another piece or not. //TODO why is this necessary?
         """
         super().__init__(board, [board.get_position(source_coords).piece])
         self.source = board.get_position(source_coords)
@@ -40,16 +40,32 @@ class StandardMove(Move):
         self._set_capture(capture_coords)
 
     @property
-    def can_capture(self):
+    def can_capture(self) -> bool:
+        """
+        Property for if this standard move can capture a piece or not
+
+        :return bool as described
+        """
         return self.__can_capture
 
     @can_capture.setter
-    def can_capture(self, can_capture : bool):
+    def can_capture(self, can_capture : bool) -> None:
+        """
+        Setter for if this StandardMove can capture a piece or nto
+
+        :param can_capture: bool for if this StandardMove an capture another piece or not
+        :return: None
+        """
         assert isinstance(can_capture, bool)
         self.__can_capture = can_capture
 
     @property
     def capture(self) -> 'Piece' | None:
+        """
+        The piece that this StandardMove captures. If it is none, then this move doesn't capture anything
+
+        :return: Piece or None object as described
+        """
         return self.__capture
 
     def _set_capture(self, capture_coords : tuple[int, int]) -> None:
@@ -96,6 +112,13 @@ class StandardMove(Move):
         return not (self.dest.is_vacant or self.dest.is_hostile(self.piece.colour))
 
     def length(self) -> int:
+        """
+        The length of this move.
+
+        Uses pythagoras's theorem
+
+        :return: int as described
+        """
         return int(math.sqrt((self.source.row-self.dest.row)**2+(self.source.col-self.dest.col)**2))
 
     def type(self) -> str:
