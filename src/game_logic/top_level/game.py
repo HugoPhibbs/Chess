@@ -3,6 +3,11 @@ from src.game_logic.mid_level.moves.move import Move
 
 
 class Game:
+    """
+    Class to represent a game of chess.
+
+    Has methods for execution, handling turns
+    """
     __curr_player: 'Player' = None  # Player whose turn it currently is
 
     def __init__(self, setup: Setup):
